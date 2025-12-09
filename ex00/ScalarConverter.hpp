@@ -2,6 +2,8 @@
 #define SCALARCONVERTER_HPP
 
 #include <iostream>
+#include <stdlib.h>
+#include <sstream>
 
 class ScalarConverter {
 	private:
@@ -10,10 +12,11 @@ class ScalarConverter {
 		ScalarConverter& operator=(const ScalarConverter& other);
 		~ScalarConverter();
 	public:
-		static char charConvert(const std::string& literal);
-		static int intConvert(const std::string& literal);
-		static float floatConvert(const std::string& literal);
-		static double doubleConvert(const std::string& literal);
+		static std::string is_nan_inf(const std::string& literal);
+		static void charConvert(const std::string& literal);
+		static void intConvert(const std::string& literal);
+		static void floatConvert(const std::string& literal);
+		static void doubleConvert(const std::string& literal);
 		static void convert(const std::string& literal);
 };
 

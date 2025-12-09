@@ -5,6 +5,7 @@ int main(int argc, char** argv) {
 		std::cerr << "exemple: ./converter <literal>" << std::endl;
 		return 1;
 	}
+	std::cout << static_cast<float>(11) << std::endl;
 	ScalarConverter::convert(argv[1]);
 	return 0;
 }
