@@ -27,7 +27,12 @@ bool is_number(const std::string& literal) {
     if(literal.find_first_not_of("0123456789+-.f") == std::string::npos &&
         first_f == last_f && (last_f == literal.length() - 1 || last_f == std::string::npos) &&
         first_dot == last_dot)
-        return true;
+    {
+        if (first_f != std::string::npos && first_dot == std::string::npos)
+            return false;
+        else
+            return true;
+    }
     return false;
 }
 
