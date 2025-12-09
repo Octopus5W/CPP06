@@ -15,7 +15,6 @@ bool check_sign(const std::string& literal) {
     size_t last = literal.find_last_of("+-");
     if(first == last && (first == 0 || first == std::string::npos))
         return true;
-    std::cout << first << " " << last << std::endl;
     return false;
 }
 
@@ -29,7 +28,6 @@ bool is_number(const std::string& literal) {
         first_f == last_f && (last_f == literal.length() - 1 || last_f == std::string::npos) &&
         first_dot == last_dot)
         return true;
-    std::cout << first_f << " " << last_f << " " << first_dot << " " << last_dot << std::endl;
     return false;
 }
 
@@ -65,7 +63,14 @@ void ScalarConverter::floatConvert(const std::string& literal) {
     if (!check_sign(literal) || !is_number(literal))
         std::cout << "impossible";
     else
-        std::cout << static_cast<float>(std::stof(literal)) << (literal.find_first_of('.') == std::string::npos ? ".0f" : "f");
+    {
+        std::stringstream ss;
+
+        ss << std::stof(literal);
+        std::string stof_literal = ss.str();
+
+        std::cout << static_cast<float>(std::stof(literal)) << (stof_literal.find_first_of('.') == std::string::npos ? ".0f" : "f");
+    }
 }
 
 void ScalarConverter::doubleConvert(const std::string& literal) {
