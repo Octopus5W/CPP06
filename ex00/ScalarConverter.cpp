@@ -67,20 +67,29 @@ bool is_nan_inf(const std::string& literal) {
 }
 
 void ScalarConverter::charConvert(const std::string& literal) {
-    if (literal.length() != 3 || (literal.length() == 3 && literal[0] != '\'' && literal[2] != '\'')) 
-        std::cout << "impossible";
-    else
+    if (literal.length() == 3 && literal[0] == '\'' && literal[2] == '\'') 
         std::cout << "'" << static_cast<char>(literal[1]) << "'";
+    else if (check_sign(literal) && is_number(literal))
+    {
+        double num = std::strtod(literal.c_str(), NULL);
+
+        if (std::isprint(static_cast<char>(num)))
+            std::cout << "'" << static_cast<char>(num) << "'";
+        else
+            std::cout << "impossible";
+    }
+    else
+        std::cout << "impossible";
 }
 
 void ScalarConverter::intConvert(const std::string& literal) {
     double num = std::strtod(literal.c_str(), NULL);
 
     if (!check_sign(literal) || !is_number(literal)
-        || num > std::numeric_limits<int>::max() || num < std::numeric_limits<int>::min())
+        || num < std::numeric_limits<int>::lowest() || num > std::numeric_limits<int>::max())
         std::cout << "impossible";
     else
-        std::cout << static_cast<int>(std::stoi(literal));
+        std::cout << static_cast<int>(num);
 }
 
 void ScalarConverter::floatConvert(const std::string& literal) {
@@ -90,7 +99,8 @@ void ScalarConverter::floatConvert(const std::string& literal) {
     else
     {
         double num = std::strtod(literal.c_str(), NULL);
-        if (num < -std::numeric_limits<float>::max() || num > std::numeric_limits<float>::max())
+
+        if (num < std::numeric_limits<float>::lowest() || num > std::numeric_limits<float>::max())
         {
             std::cout << static_cast<float>(num) << "f";
             return;
@@ -100,7 +110,7 @@ void ScalarConverter::floatConvert(const std::string& literal) {
         ss << std::stof(literal);
         std::string stof_literal = ss.str();
 
-        std::cout << static_cast<float>(std::stof(literal)) << (stof_literal.find_first_of('.') == std::string::npos ? ".0f" : "f");
+        std::cout << static_cast<float>(num) << (stof_literal.find_first_of('.') == std::string::npos ? ".0f" : "f");
     }
 }
 
@@ -111,22 +121,21 @@ void ScalarConverter::doubleConvert(const std::string& literal) {
     else
     {
         double num = std::strtod(literal.c_str(), NULL);
-        if (num < std::numeric_limits<double>::min() || num > std::numeric_limits<double>::max())
+        if (num < std::numeric_limits<double>::lowest() || num > std::numeric_limits<double>::max())
         {
             std::cout << static_cast<double>(num);
             return;
         }
         std::stringstream ss;
-
-        ss << std::stod(literal);
+        
+        ss << num;
         std::string stod_literal = ss.str();
-
-        std::cout << static_cast<double>(std::strtod(literal.c_str(), NULL)) << (stod_literal.find_first_of('.') == std::string::npos ? ".0" : "");
+        std::cout << static_cast<double>(num) << (stod_literal.find_first_of('.') == std::string::npos ? ".0" : "");
     }
 }
 
 void ScalarConverter::convert(const std::string& literal) {
-    if (literal[0] == '\'' && literal[literal.length() - 1] == '\'')
+    if (literal.length() > 3 && literal[0] == '\'' && literal[literal.length() - 1] == '\'')
     {
         if (literal == "'nan'" || literal == "'nanf'")
         {
@@ -134,7 +143,6 @@ void ScalarConverter::convert(const std::string& literal) {
             std::cout << "int: impossible" <<  std::endl;
             std::cout << "float: " << "nanf" << std::endl;
             std::cout << "double: " << "nan" << std::endl;
-            return;
         }
         else if (literal == "'+inf'" || literal == "'+inff'" || literal == "'inf'" || literal == "'inff'")
         {
@@ -142,7 +150,6 @@ void ScalarConverter::convert(const std::string& literal) {
             std::cout << "int: impossible" <<  std::endl;
             std::cout << "float: " << "+inff" << std::endl;
             std::cout << "double: " << "+inf" << std::endl;
-            return;
         }
         else if (literal == "'-inf'" || literal == "'-inff'")
         {
@@ -150,10 +157,9 @@ void ScalarConverter::convert(const std::string& literal) {
             std::cout << "int: impossible" <<  std::endl;
             std::cout << "float: " << "-inff" << std::endl;
             std::cout << "double: " << "-inf" << std::endl;
-            return;
         }
     }
-    if (literal.length() == 3 && literal[0] == '\'' && literal[2] == '\'')
+    else if (literal.length() == 3 && literal[0] == '\'' && literal[2] == '\'')
     {
         std::cout << "char: ";
         charConvert(literal);
