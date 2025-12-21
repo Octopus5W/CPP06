@@ -105,12 +105,8 @@ void ScalarConverter::floatConvert(const std::string& literal) {
             std::cout << static_cast<float>(num) << "f";
             return;
         }
-        std::stringstream ss;
-
-        ss << std::stof(literal);
-        std::string stof_literal = ss.str();
-
-        std::cout << static_cast<float>(num) << (stof_literal.find_first_of('.') == std::string::npos ? ".0f" : "f");
+        std::cout.precision(6);
+        std::cout << static_cast<float>(num) << (literal.find_first_of('.') == std::string::npos ? ".0f" : "f");
     }
 }
 
@@ -126,11 +122,8 @@ void ScalarConverter::doubleConvert(const std::string& literal) {
             std::cout << static_cast<double>(num);
             return;
         }
-        std::stringstream ss;
-        
-        ss << num;
-        std::string stod_literal = ss.str();
-        std::cout << static_cast<double>(num) << (stod_literal.find_first_of('.') == std::string::npos ? ".0" : "");
+        std::cout.precision(15);
+        std::cout << static_cast<double>(num) << (literal.find_first_of('.') == std::string::npos ? ".0" : "");
     }
 }
 
@@ -157,6 +150,13 @@ void ScalarConverter::convert(const std::string& literal) {
             std::cout << "int: impossible" <<  std::endl;
             std::cout << "float: " << "-inff" << std::endl;
             std::cout << "double: " << "-inf" << std::endl;
+        }
+        else
+        {
+            std::cout << "char: impossible" << std::endl;
+            std::cout << "int: impossible" <<  std::endl;
+            std::cout << "float: impossible" << std::endl;
+            std::cout << "double: impossible" << std::endl;
         }
     }
     else if (literal.length() == 3 && literal[0] == '\'' && literal[2] == '\'')
