@@ -73,7 +73,7 @@ void ScalarConverter::charConvert(const std::string& literal) {
     {
         double num = std::strtod(literal.c_str(), NULL);
 
-        if (std::isprint(static_cast<char>(num)))
+        if (std::isprint(num))
             std::cout << "'" << static_cast<char>(num) << "'";
         else
             std::cout << "impossible";
