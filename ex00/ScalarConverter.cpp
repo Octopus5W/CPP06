@@ -72,7 +72,6 @@ void intConvert(const std::string& literal) {
         return;
     }
     
-    // C++98 NaN and Inf check
     if (num != num || num > std::numeric_limits<int>::max() || num < std::numeric_limits<int>::min()) {
          std::cout << "impossible";
          return;

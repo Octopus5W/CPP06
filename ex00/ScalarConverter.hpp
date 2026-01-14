@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <limits>
-#include <stdlib.h>
+#include <cstdlib>
 
 class ScalarConverter {
 	private:
