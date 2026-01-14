@@ -1,13 +1,16 @@
 NAME = identity
-C++ = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98
-SRC = main.cpp
+CPP = c++
+CPPFLAGS = -Wall -Wextra -Werror -std=c++98
+SRC = main.cpp 
 OBJ = $(SRC:.cpp=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(C++) $(CFLAGS) $(OBJ) -o $(NAME)
+	$(CPP) $(CPPFLAGS) $(OBJ) -o $(NAME)
+
+%.o: %.cpp
+	$(CPP) $(CPPFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)
@@ -18,4 +21,3 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
-

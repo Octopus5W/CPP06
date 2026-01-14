@@ -1,13 +1,16 @@
-NAME = serializer
-C++ = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98
-SRC = main.cpp Serializer.cpp
+NAME = Serealizer
+CPP = c++
+CPPFLAGS = -Wall -Wextra -Werror -std=c++98
+SRC = main.cpp Serealizer.cpp 
 OBJ = $(SRC:.cpp=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(C++) $(CFLAGS) $(OBJ) -o $(NAME)
+	$(CPP) $(CPPFLAGS) $(OBJ) -o $(NAME)
+
+%.o: %.cpp
+	$(CPP) $(CPPFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)
