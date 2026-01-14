@@ -33,21 +33,21 @@ void identify(Base* p) {
 
 void identify(Base& p) {
     try {
-        dynamic_cast<A&>(p);
+        (void)dynamic_cast<A&>(p);
         std::cout << "A => Success" << std::endl;
     } catch (std::exception &e) {
         std::cerr << "A " << e.what() << std::endl;
     }
 
     try {
-        dynamic_cast<B&>(p);
+        (void)dynamic_cast<B&>(p);
         std::cout << "B => Success" << std::endl;
     } catch (std::exception &e) {
         std::cerr << "B " << e.what() << std::endl;
     }
 
     try {
-        dynamic_cast<C&>(p);
+        (void)dynamic_cast<C&>(p);
         std::cout << "C => Success" << std::endl;
     } catch (std::exception &e) {
         std::cerr << "C " << e.what() << std::endl;

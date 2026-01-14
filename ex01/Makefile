@@ -1,7 +1,7 @@
 NAME = Serealizer
 CPP = c++
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
-SRC = main.cpp Serealizer.cpp 
+SRC = main.cpp Serializer.cpp 
 OBJ = $(SRC:.cpp=.o)
 
 all: $(NAME)
